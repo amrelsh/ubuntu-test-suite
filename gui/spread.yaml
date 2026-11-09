@@ -1,0 +1,23 @@
+project: ubuntu-test-suite
+
+warn-timeout: 30m
+kill-timeout: 2h
+
+backends:
+    lxd:
+        systems: [ubuntu-26.04]
+
+suites:
+    desktop-installer/:
+        summary: Testing installer flows with YARF
+
+
+path: /workspace/
+
+prepare: |
+    cd "$SPREAD_PATH"
+    python3 runner/setup.py
+
+restore: |
+    cd "$SPREAD_PATH"
+    python3 runner/cleanup.py

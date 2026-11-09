@@ -1,0 +1,14 @@
+{
+    "-boot": "once=d",
+    "-cdrom": null,
+    "-enable-kvm": null,
+    "-hda": null,
+    "-m": null,
+    "-machine": "pc,accel=kvm",
+    "-smp": null,
+    "-usbdevice": "tablet",
+    "-vga": "virtio",
+    "-vnc": null,
+    "-monitor": "unix:monitor,server=on,wait=off",
+    "-D": "qemu-debug-log"
+}

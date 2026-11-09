@@ -1,0 +1,12 @@
+summary: Entire disk install
+environment:
+    ISO: $SPREAD_PATH/resources/resolute-desktop-amd64.iso
+artifacts:
+    - artifacts
+execute: |
+    python3 "$SPREAD_PATH/runner/spawn_and_run_test_suite.py" \
+        --test-suite "$SPREAD_PATH/desktop-installer" \
+        --iso "$ISO" \
+        --qemu-args-json "$SPREAD_PATH/runner/qemu-args.json" \
+        --cleanup-storage \
+        --suite Entire-Disk

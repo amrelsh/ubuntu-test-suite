@@ -1,0 +1,12 @@
+[tool.robocop.lint]
+ignore = [
+    "wrong-case-in-keyword-name",
+    "too-many-calls-in-test-case",
+    "replace-create-with-var",
+    "todo-in-comment",
+    "line-too-long",
+    "too-long-keyword",
+    "file-too-long",
+    "too-many-calls-in-keyword",
+    "no-suite-variable"
+]

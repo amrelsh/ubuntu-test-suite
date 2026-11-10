@@ -7,6 +7,7 @@ PACKAGES = [
     "git",
     "curl",
     "python3-pip",
+    "python3-dev",
     "python3-paramiko",
     "python3-venv",
     "libxkbcommon-dev",
@@ -45,7 +46,7 @@ def main():
 
     for cmd in COMMANDS:
         run(cmd)
+                                                                                                                                                                                                                                                                                                                                    
 
-
-if __name__ == "__main__":
+if __name__ == "__main__":                                                                                                                                                                                  
     main()

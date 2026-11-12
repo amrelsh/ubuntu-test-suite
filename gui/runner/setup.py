@@ -7,7 +7,6 @@ PACKAGES = [
     "git",
     "curl",
     "python3-pip",
-    "python3-dev",
     "python3-paramiko",
     "python3-venv",
     "libxkbcommon-dev",
@@ -22,10 +21,12 @@ PACKAGES = [
     "swtpm",
     "ovmf",
 ]
+YARF_REVISION = "d4b9a9be8cf42779465a6e27538e1128fd8bf6e0"
 REPOS = {
     "https://github.com/canonical/yarf.git": "/root/yarf",
 }
 COMMANDS = [
+    f"git -C /root/yarf checkout {YARF_REVISION}",
     "python3 -m pip install --break-system-packages uv",
     "uv sync --directory /root/yarf",
     "ln -sf /root/yarf/.venv/bin/yarf /usr/local/bin/yarf",
@@ -46,7 +47,7 @@ def main():
 
     for cmd in COMMANDS:
         run(cmd)
-                                                                                                                                                                                                                                                                                                                                    
 
-if __name__ == "__main__":                                                                                                                                                                                  
+
+if __name__ == "__main__":
     main()

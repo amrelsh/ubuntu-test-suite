@@ -1,0 +1,19 @@
+#cloud-config
+users:
+  - name: runner
+    shell: /bin/bash
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    lock_passwd: false
+ssh_pwauth: true
+chpasswd:
+  expire: false
+  list: |
+    runner:SPREAD_PASSWORD
+write_files:
+  - path: /etc/ssh/sshd_config.d/00-spread.conf
+    permissions: "0644"
+    content: |
+      PasswordAuthentication yes
+runcmd:
+  - rm -f /etc/ssh/sshd_config.d/60-cloudimg-settings.conf
+  - systemctl restart ssh

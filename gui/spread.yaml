@@ -2,10 +2,43 @@ project: ubuntu-test-suite
 
 warn-timeout: 30m
 kill-timeout: 2h
+workers: 1
 
 backends:
     lxd:
+        manual: true
         systems: [ubuntu-26.04]
+    lxd-vm:
+        type: adhoc
+        allocate: |
+            # keep the password out of the trace
+            { set +x; } 2>/dev/null
+
+            VM_NAME="ubuntu-test-suite-${SPREAD_SYSTEM/./-}-${RANDOM}"
+            DISK="${DISK:-50}"
+            CPU="${CPU:-8}"
+            MEM="${MEM:-30}"
+
+            lxc launch --vm -e \
+              "${SPREAD_SYSTEM/-/:}" \
+              "${VM_NAME}" \
+              -c user.user-data="$(sed "s|SPREAD_PASSWORD|${SPREAD_PASSWORD}|g" cloud-config.yaml)" \
+              -c limits.cpu="${CPU}" \
+              -c limits.memory="${MEM}GiB" \
+              -d root,size="${DISK}GiB"
+
+            # Wait for the agent, then for cloud-init to finish provisioning.
+            while ! lxc exec "${VM_NAME}" -- true &>/dev/null; do sleep 0.5; done
+            lxc exec "${VM_NAME}" -- cloud-init status --wait >/dev/null 2>&1 || true
+
+            ADDRESS "$(lxc ls -f csv | grep "${VM_NAME}" | cut -d"," -f3 | cut -d" " -f1)"
+        discard: |
+            [ -n "${SPREAD_SYSTEM_ADDRESS:-}" ] || exit 0
+            lxc delete -f "$(lxc list -f csv -c n4 \
+                ipv4="${SPREAD_SYSTEM_ADDRESS}" | cut -d, -f1 | head -n1)" || true
+        systems:
+            - ubuntu-26.04:
+                username: runner
 
 suites:
     desktop-installer/:

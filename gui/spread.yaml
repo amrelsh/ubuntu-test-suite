@@ -6,7 +6,6 @@ workers: 1
 
 backends:
     lxd:
-        manual: true
         systems: [ubuntu-26.04]
     lxd-vm:
         type: adhoc

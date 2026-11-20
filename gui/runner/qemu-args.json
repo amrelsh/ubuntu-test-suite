@@ -1,6 +1,7 @@
 {
     "-boot": "once=d",
     "-cdrom": null,
+    "-cpu": "host",
     "-enable-kvm": null,
     "-hda": null,
     "-m": null,
